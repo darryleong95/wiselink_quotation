@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.MuiInputLabel-root {
+    color: #8f9ca9 !important;
+}
+
+.MuiSwitch-switchBase.Mui-checked {
+    color: #d81b60;
+    /* :hover {
+        background-color: pink;
+    } */
+}
+
+.MuiTableBody-root {
+    border-color: 'red';
+}
+
+@font-face {
+    font-family: 'AirbnbCereal-Medium';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/AirbnbCerealMedium.ttf');
+}
+
+@font-face {
+    font-family: 'AirbnbCereal-Book';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/AirbnbCerealBook.ttf');
+}
+
+@font-face {
+    font-family: 'AirbnbCereal-Bold';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/AirbnbCerealBold.ttf');
+}
