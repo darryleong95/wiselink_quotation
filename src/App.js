@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
     width: '100vw',
     display: 'flex',
-    backgroundColor: '#161c24',
+    backgroundColor: '#ffffff',
   },
   appBar: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -26,12 +26,13 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: '#161c24',
-    border: 'none'
+    backgroundColor: '#ffffff',
+    borderColor: '#f3f6f8',
+    borderStyle: 'dotted',
   },
   content: {
     flexGrow: 1,
-    backgroundColor: '#161c24',
+    backgroundColor: '#ffffff',
   },
 }));
 

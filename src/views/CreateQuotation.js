@@ -83,7 +83,7 @@ const CreateQuotation = () => {
                                 label="Customer"
                                 defaultValue={customer}
                                 fullWidth={true}
-                                variant='filled'
+                                variant='outlined'
                                 InputProps={{
                                     className: classes.text_font,
                                 }}
@@ -94,7 +94,7 @@ const CreateQuotation = () => {
                                 required
                                 label="Shipment Address"
                                 defaultValue={shipment}
-                                variant="filled"
+                                variant="outlined"
                                 fullWidth={true}
                                 InputProps={{
                                     className: classes.text_font,
@@ -106,7 +106,7 @@ const CreateQuotation = () => {
                                 required
                                 label="Opportunity"
                                 defaultValue={opportunity}
-                                variant="filled"
+                                variant="outlined"
                                 fullWidth={true}
                                 InputProps={{
                                     className: classes.text_font,
@@ -118,7 +118,7 @@ const CreateQuotation = () => {
                                 required
                                 label="Project"
                                 defaultValue={project}
-                                variant="filled"
+                                variant="outlined"
                                 fullWidth={true}
                                 InputProps={{
                                     className: classes.text_font,
@@ -135,7 +135,7 @@ const CreateQuotation = () => {
                                 label="Sales Manager"
                                 defaultValue={salesManager}
                                 fullWidth={true}
-                                variant='filled'
+                                variant='outlined'
                                 InputProps={{
                                     className: classes.text_font,
                                 }}
@@ -146,7 +146,7 @@ const CreateQuotation = () => {
                                 required
                                 label="Sales Channel Address"
                                 defaultValue={salesChannelAddress}
-                                variant="filled"
+                                variant="outlined"
                                 fullWidth={true}
                                 InputProps={{
                                     className: classes.text_font,
@@ -158,7 +158,7 @@ const CreateQuotation = () => {
                                 required
                                 label="Customer Contact"
                                 defaultValue={customerContact}
-                                variant="filled"
+                                variant="outlined"
                                 fullWidth={true}
                                 InputProps={{
                                     className: classes.text_font,
@@ -170,7 +170,7 @@ const CreateQuotation = () => {
                                 required
                                 label="Phone"
                                 defaultValue={phone}
-                                variant="filled"
+                                variant="outlined"
                                 fullWidth={true}
                                 InputProps={{
                                     className: classes.text_font,
@@ -186,7 +186,7 @@ const CreateQuotation = () => {
                                 required
                                 label="Payment terms"
                                 defaultValue={paymentTerms}
-                                variant="filled"
+                                variant="outlined"
                                 fullWidth={true}
                                 InputProps={{
                                     className: classes.text_font,
@@ -198,7 +198,7 @@ const CreateQuotation = () => {
                                 required
                                 label="Expiry Date"
                                 defaultValue={expiryDate}
-                                variant="filled"
+                                variant="outlined"
                                 fullWidth={true}
                                 InputProps={{
                                     className: classes.text_font,
@@ -221,7 +221,7 @@ const CreateQuotation = () => {
                                 required
                                 label="Number"
                                 defaultValue={number}
-                                variant="filled"
+                                variant="outlined"
                                 fullWidth={true}
                                 InputProps={{
                                     className: classes.text_font,
@@ -233,7 +233,7 @@ const CreateQuotation = () => {
                                 required
                                 label="Date"
                                 defaultValue={date}
-                                variant="filled"
+                                variant="outlined"
                                 fullWidth={true}
                                 InputProps={{
                                     className: classes.text_font,
@@ -250,7 +250,7 @@ const CreateQuotation = () => {
                                     required
                                     label="Currency"
                                     defaultValue={currency}
-                                    variant="filled"
+                                    variant="outlined"
                                     fullWidth={true}
                                     InputProps={{
                                         className: classes.text_font,
@@ -262,7 +262,7 @@ const CreateQuotation = () => {
                                     required
                                     label="Total Amount"
                                     defaultValue={totalAmount}
-                                    variant="filled"
+                                    variant="outlined"
                                     fullWidth={true}
                                     InputProps={{
                                         className: classes.text_font,
@@ -276,7 +276,7 @@ const CreateQuotation = () => {
                                     required
                                     label="Net Amount"
                                     defaultValue={netAmount}
-                                    variant="filled"
+                                    variant="outlined"
                                     fullWidth={true}
                                     InputProps={{
                                         className: classes.text_font,
@@ -288,7 +288,7 @@ const CreateQuotation = () => {
                                     required
                                     label="Vat Amount"
                                     defaultValue={vatAmount}
-                                    variant="filled"
+                                    variant="outlined"
                                     fullWidth={true}
                                     InputProps={{
                                         className: classes.text_font,
@@ -316,7 +316,7 @@ const CreateQuotation = () => {
                                 className={classes.text_field}
                                 label="Note"
                                 defaultValue={notes}
-                                variant="filled"
+                                variant="outlined"
                                 fullWidth={true}
                                 InputProps={{
                                     className: classes.text_font,
@@ -330,7 +330,7 @@ const CreateQuotation = () => {
                                 required
                                 label="Expiry Date"
                                 defaultValue=""
-                                variant="filled"
+                                variant="outlined"
                                 fullWidth={true}
                                 InputProps={{
                                     className: classes.text_font,

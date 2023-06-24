@@ -9,6 +9,7 @@ import routes from '../routes'
 
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import ExpandLess from '@material-ui/icons/ExpandLess';
+import { Add, Edit } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
@@ -25,16 +26,35 @@ const useStyles = makeStyles((theme) => ({
     },
     text: {
         fontSize: 14,
-        color: '#fff',
-        marginLeft: '15px',
+        color: '#2aad79',
     },
     listItem: {
+        width: '90%',
+        borderRadius: '8px',
+        margin: '10px',
+        backgroundColor: '#eff8f3',
         '&:hover': {
-            backgroundColor: '#324963',
+            backgroundColor: '#e1f6e6',
             transition: '0.3s'
         },
-        transition: '0.3s'
-    }
+        transition: '0.3s',
+        cursor: 'pointer',
+        userSelect: 'none',
+        verticalAlign: 'middle',
+        appearance: 'none',
+        display: 'flex',
+        flexGrow: '1',
+        alignSelf: 'center',
+        transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+        // padding: '4px 8px 4px 12px',
+        minHeight: '44px',
+        backgroundColor: 'rgba(0, 167, 111, 0.08)',
+    },
+    edit_icon: {
+        marginRight: '10px',
+        color: '#01a76e',
+        fontSize: '15px'
+    },
 }));
 
 
@@ -48,19 +68,11 @@ const Sidebar = (props) => {
     }
 
     return (
-        <div>
-            <List>
-                <ListItem onClick={togglePlexus}>
-                    <ListItemText primary="Plexus" className={classes.header} />
-                    {plexus ? <ExpandLess style={{ color: '#fff' }} /> : <ExpandMore style={{ color: '#fff' }} />}
+        <div className={classes.sidebar}>
+            <List component="div">
+                <ListItem key={routes[0].name} component={Link} to={routes[0].path} className={classes.listItem}>
+                    <Edit className={classes.edit_icon} /> <Typography className={classes.text}>{routes[0].name}</Typography>
                 </ListItem>
-                <Collapse in={plexus} timeout="auto" unmountOnExit className={classes.listBody}>
-                    <List component="div" disablePadding>
-                        <ListItem key={routes[0].name} component={Link} to={routes[0].path} className={classes.listItem}>
-                            <Typography className={classes.text}>{routes[0].name}</Typography>
-                        </ListItem>
-                    </List>
-                </Collapse>
             </List>
         </div>
     );
