@@ -32,6 +32,13 @@ code {
 }
 
 @font-face {
+    font-family: 'AirbnbCereal-Light';
+    font-style: normal;
+    font-weight: 500;
+    src: url('./fonts/AirbnbCerealLight.ttf');
+}
+
+@font-face {
     font-family: 'AirbnbCereal-Book';
     font-style: normal;
     font-weight: 400;

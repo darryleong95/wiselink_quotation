@@ -1,343 +1,189 @@
 import React, { useState } from 'react';
 import { useStyles } from '../styles'
-import { FormControlLabel, Switch, TextField } from '@material-ui/core';
+import { FormControlLabel, Switch, Typography } from '@material-ui/core';
+import TextField from '../components/TextField'
 import BasicTable from '../components/QuotationTable';
 
 const CreateQuotation = () => {
     const classes = useStyles()
 
-    const [customer, setCustomer] = useState("")
-    const [shipment, setAddress] = useState("")
-    const [opportunity, setOpportunity] = useState("")
-    const [project, setProject] = useState("")
-    const [salesManager, setSalesManager] = useState("")
-    const [salesChannelAddress, setSalesChannelAddress] = useState("")
-    const [customerContact, setCustomerContact] = useState("")
-    const [phone, setPhone] = useState("")
-    const [paymentTerms, setPaymentTerms] = useState("")
-    const [expiryDate, setExpiryDate] = useState("")
-
-    // date
     const [number, setNumber] = useState("")
-    const [date, setDate] = useState("")
+    const [customer, setCustomer] = useState("")
+    const [attention, setAttention] = useState("")
+    const [reference, setReference] = useState("")
+    const [status, setStatus] = useState("")
 
-    // currency
+    const [phone, setPhone] = useState("")
+    const [extension, setExtension] = useState("")
+    const [fax, setFax] = useState("")
+
+    const [date, setDate] = useState("")
+    const [salesManager, setSalesManager] = useState("")
     const [currency, setCurrency] = useState("")
+    const [payment, setPayment] = useState("")
+    const [shipment, setShipment] = useState("")
+    const [validity, setValidity] = useState("")
+    
+    // amounts
     const [totalAmount, setTotalAmount] = useState("")
     const [netAmount, setNetAmount] = useState("")
     const [vatAmount, setVatAmount] = useState("")
-    const [vatSwitch, setVatSwitch] = useState(false)
-
-
-    // notes
-    const [notes, setNotes] = useState("")
 
     const handleChange = (e, type) => {
-        if (type == 'customer')
-            setCustomer(e.target.value)
-        if (type == 'address')
-            setAddress(e.target.value)
-        if (type == 'opportunity')
-            setOpportunity(e.target.value)
-        if (type == 'project')
-            setProject(e.target.value)
-        if (type == 'sales_manager')
-            setSalesManager(e.target.value)
-        if (type == 'sales_channel_manager')
-            setSalesChannelAddress(e.target.value)
-        if (type == 'customer_contact')
-            setCustomerContact(e.target.value)
-        if (type == 'phone')
-            setPhone(e.target.value)
-        if (type == 'payment_terms')
-            setPaymentTerms(e.target.value)
-        if (type == 'expiry_date')
-            setExpiryDate(e.target.value)
-        if (type == 'number')
+        if (type == 'No.')
             setNumber(e.target.value)
-        if (type == 'date')
+        if (type == 'Customer')
+            setCustomer(e.target.value)
+        if (type == 'Attention')
+            setAttention(e.target.value)
+        if (type == 'Reference')
+            setReference(e.target.value)
+        if (type == 'Status')
+            setStatus(e.target.value)     
+        // contacts
+        if (type == 'Phone')
+            setPhone(e.target.value)
+        if (type == 'Extension')
+            setExtension(e.target.value) 
+        if (type == 'Fax')
+            setFax(e.target.value) 
+        // right half form
+        if (type == 'Date')
             setDate(e.target.value)
-        if (type == 'currency')
+        if (type == 'Sales Manager')
+            setSalesManager(e.target.value) 
+        if (type == 'Currency')
             setCurrency(e.target.value)
-        if (type == 'total_amount')
+        if (type == 'Payment Terms')
+            setPayment(e.target.value)
+        if (type == 'Shipment Terms')
+            setShipment(e.target.value)
+        if (type == "Validity")
+            setValidity(e.target.value)
+        // amounts
+        if (type == 'Total Amount')
             setTotalAmount(e.target.value)
-        if (type == 'net_amount')
+        if (type == 'Net Amount')
             setNetAmount(e.target.value)
-        if (type == 'vat_amount')
+        if (type == 'Vat Amount')
             setVatAmount(e.target.value)
-        if (type == 'vat_switch')
-            setVatSwitch(!vatSwitch)
-        if (type == 'notes')
-            setNotes(e.target.value)
     }
 
     return (
-        <div className={classes.container}>
-            <div className={classes.left}>
-                <div className={classes.leftFormContainer}>
+        <div className={classes.wrapper}>
+            <div>
+                <Typography className={classes.header}>Create</Typography>
+            </div>
+            <div className={classes.container}>
+                <div className={classes.form_container}>
                     <div className={classes.customer}>
                         <div className={classes.individual_form}>
-                            <TextField
-                                className={classes.text_field}
-                                required
-                                label="Customer"
-                                defaultValue={customer}
-                                fullWidth={true}
-                                variant='outlined'
-                                InputProps={{
-                                    className: classes.text_font,
-                                }}
-                                onChange={(e) => handleChange(e, 'customer')}
-                            />
-                            <TextField
-                                className={classes.text_field}
-                                required
-                                label="Shipment Address"
-                                defaultValue={shipment}
-                                variant="outlined"
-                                fullWidth={true}
-                                InputProps={{
-                                    className: classes.text_font,
-                                }}
-                                onChange={(e) => handleChange(e, 'address')}
-                            />
-                            <TextField
-                                className={classes.text_field}
-                                required
-                                label="Opportunity"
-                                defaultValue={opportunity}
-                                variant="outlined"
-                                fullWidth={true}
-                                InputProps={{
-                                    className: classes.text_font,
-                                }}
-                                onChange={(e) => handleChange(e, 'opportunity')}
-                            />
-                            <TextField
-                                className={classes.text_field}
-                                required
-                                label="Project"
-                                defaultValue={project}
-                                variant="outlined"
-                                fullWidth={true}
-                                InputProps={{
-                                    className: classes.text_font,
-                                }}
-                                onChange={(e) => handleChange(e, 'project')}
-                            />
+                            <div style={{display:'flex'}}>
+                                <TextField
+                                    value={number}
+                                    label="No."
+                                    handle={handleChange}
+                                />
+                            </div>
+                            <div style={{display:'flex', flexDirection:'row'}}>
+                                <TextField
+                                    value={customer}
+                                    label="Customer"
+                                    handle={handleChange}
+                                />
+                            </div>
+                            <div style={{display:'flex', flexDirection:'row'}}>
+                                <TextField
+                                    value={attention}
+                                    label="Attention"
+                                    handle={handleChange}
+                                    flexSize={2}
+                                />
+                                <TextField
+                                    value={phone}
+                                    label="Phone"
+                                    handle={handleChange}
+                                    flexSize={1}
+                                />
+                            </div>
+                            <div style={{display:'flex', flexDirection:'row'}}>
+                                <TextField
+                                    value={reference}
+                                    label="Reference"
+                                    handle={handleChange}
+                                    flexSize={2}
+                                />
+                                <TextField
+                                    value={extension}
+                                    label="Ext"
+                                    handle={handleChange}
+                                    flexSize={1}
+                                />
+                            </div>
+                            <div style={{display:'flex', flexDirection:'row'}}>
+                                <TextField
+                                    value={status}
+                                    label="Status"
+                                    handle={handleChange}
+                                    flexSize={2}
+                                />
+                                <TextField
+                                    value={fax}
+                                    label="Fax"
+                                    handle={handleChange}
+                                    flexSize={1}
+                                />
+                            </div>
                         </div>
                     </div>
                     <div className={classes.sales}>
                         <div className={classes.individual_form}>
-                            <TextField
-                                className={classes.text_field}
-                                required
-                                label="Sales Manager"
-                                defaultValue={salesManager}
-                                fullWidth={true}
-                                variant='outlined'
-                                InputProps={{
-                                    className: classes.text_font,
-                                }}
-                                onChange={(e) => handleChange(e, 'sales_manager')}
-                            />
-                            <TextField
-                                className={classes.text_field}
-                                required
-                                label="Sales Channel Address"
-                                defaultValue={salesChannelAddress}
-                                variant="outlined"
-                                fullWidth={true}
-                                InputProps={{
-                                    className: classes.text_font,
-                                }}
-                                onChange={(e) => handleChange(e, 'sales_channel_address')}
-                            />
-                            <TextField
-                                className={classes.text_field}
-                                required
-                                label="Customer Contact"
-                                defaultValue={customerContact}
-                                variant="outlined"
-                                fullWidth={true}
-                                InputProps={{
-                                    className: classes.text_font,
-                                }}
-                                onChange={(e) => handleChange(e, 'customer_contact')}
-                            />
-                            <TextField
-                                className={classes.text_field}
-                                required
-                                label="Phone"
-                                defaultValue={phone}
-                                variant="outlined"
-                                fullWidth={true}
-                                InputProps={{
-                                    className: classes.text_font,
-                                }}
-                                onChange={(e) => handleChange(e, 'phone')}
-                            />
-                        </div>
-                    </div>
-                    <div className={classes.payment}>
-                        <div className={classes.individual_form}>
-                            <TextField
-                                className={classes.text_field}
-                                required
-                                label="Payment terms"
-                                defaultValue={paymentTerms}
-                                variant="outlined"
-                                fullWidth={true}
-                                InputProps={{
-                                    className: classes.text_font,
-                                }}
-                                onChange={(e) => handleChange(e, 'payment_terms')}
-                            />
-                            <TextField
-                                className={classes.text_field}
-                                required
-                                label="Expiry Date"
-                                defaultValue={expiryDate}
-                                variant="outlined"
-                                fullWidth={true}
-                                InputProps={{
-                                    className: classes.text_font,
-                                }}
-                                onChange={(e) => handleChange(e, 'expiry_date')}
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div className={classes.lineItemContainer}>
-                    <BasicTable/>
-                </div>
-            </div>
-            <div className={classes.right}>
-                <div className={classes.vertical_form_container}>
-                    <div className={classes.date}>
-                        <div className={classes.date_form}>
-                            <TextField
-                                className={classes.text_field}
-                                required
-                                label="Number"
-                                defaultValue={number}
-                                variant="outlined"
-                                fullWidth={true}
-                                InputProps={{
-                                    className: classes.text_font,
-                                }}
-                                onChange={(e) => handleChange(e, 'number')}
-                            />
-                            <TextField
-                                className={classes.text_field}
-                                required
-                                label="Date"
-                                defaultValue={date}
-                                variant="outlined"
-                                fullWidth={true}
-                                InputProps={{
-                                    className: classes.text_font,
-                                }}
-                                onChange={(e) => handleChange(e, 'date')}
-                            />
-                        </div>
-                    </div>
-                    <div className={classes.currency}>
-                        <div className={classes.currency_form}>
-                            <div className={classes.currency_form_1}>
+                            <div style={{display:'flex', flexDirection:'row'}}>
                                 <TextField
-                                    className={classes.text_field}
-                                    required
+                                    value={date}
+                                    label="Date"
+                                    handle={handleChange}
+                                />
+                            </div>
+                            <div style={{display:'flex', flexDirection:'row'}}>
+                                <TextField
+                                    value={salesManager}
+                                    label="Sales Person"
+                                    handle={handleChange}
+                                />
+                            </div>
+                            <div style={{display:'flex', flexDirection:'row'}}>
+                                <TextField
+                                    value={currency}
                                     label="Currency"
-                                    defaultValue={currency}
-                                    variant="outlined"
-                                    fullWidth={true}
-                                    InputProps={{
-                                        className: classes.text_font,
-                                    }}
-                                    onChange={(e) => handleChange(e, 'currency')}
-                                />
-                                <TextField
-                                    className={classes.text_field}
-                                    required
-                                    label="Total Amount"
-                                    defaultValue={totalAmount}
-                                    variant="outlined"
-                                    fullWidth={true}
-                                    InputProps={{
-                                        className: classes.text_font,
-                                    }}
-                                    onChange={(e) => handleChange(e, 'total_amount')}
+                                    handle={handleChange}
                                 />
                             </div>
-                            <div className={classes.currency_form_1}>
+                            <div style={{display:'flex', flexDirection:'row'}}>
                                 <TextField
-                                    className={classes.text_field}
-                                    required
-                                    label="Net Amount"
-                                    defaultValue={netAmount}
-                                    variant="outlined"
-                                    fullWidth={true}
-                                    InputProps={{
-                                        className: classes.text_font,
-                                    }}
-                                    onChange={(e) => handleChange(e, 'net_amount')}
+                                    value={shipment}
+                                    label="Shipment Terms"
+                                    handle={handleChange}
                                 />
+                                <div style={{paddingLeft: '5px'}}/>
                                 <TextField
-                                    className={classes.text_field}
-                                    required
-                                    label="Vat Amount"
-                                    defaultValue={vatAmount}
-                                    variant="outlined"
-                                    fullWidth={true}
-                                    InputProps={{
-                                        className: classes.text_font,
-                                    }}
-                                    onChange={(e) => handleChange(e, 'vat_amount')}
+                                    value={payment}
+                                    label="Payment Terms"
+                                    handle={handleChange}
                                 />
                             </div>
-                            <div className={classes.currency_form_1}>
-                                <FormControlLabel
-                                    control={
-                                        <Switch checked={vatSwitch} name="VAT Switch" className={classes.text_font}/>
-                                    }
-                                    label="price includes VAT"
-                                    className={classes.vat_switch}
-                                    onChange={(e) => handleChange(e, 'vat_switch')}
+                            <div style={{display:'flex', flexDirection:'row'}}>
+                                <TextField
+                                    value={validity}
+                                    label="Validity"
+                                    handle={handleChange}
                                 />
                             </div>
                         </div>
                     </div>
-                    {/* <div className={classes.vat}>
-                    </div> */}
-                    <div className={classes.extra}>
-                        <div className={classes.currency_form}>
-                            <TextField
-                                className={classes.text_field}
-                                label="Note"
-                                defaultValue={notes}
-                                variant="outlined"
-                                fullWidth={true}
-                                InputProps={{
-                                    className: classes.text_font,
-                                }}
-                                multiline
-                                minRows={4}
-                                onChange={(e) => handleChange(e, 'notes')}
-                            />
-                            {/* <TextField
-                                className={classes.text_field}
-                                required
-                                label="Expiry Date"
-                                defaultValue=""
-                                variant="outlined"
-                                fullWidth={true}
-                                InputProps={{
-                                    className: classes.text_font,
-                                }}
-                            /> */}
-                        </div>
-                    </div>
+                </div>
+                <div className={classes.table_wrapper}>
+                    <BasicTable/>
                 </div>
             </div>
         </div>

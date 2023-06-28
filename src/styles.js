@@ -3,48 +3,51 @@ import { makeStyles, colors } from '@material-ui/core'
 export const useStyles = makeStyles({
 
     // component containers
+    wrapper: {
+        padding: '1em 6em',
+        height: 'auto'
+    },
+
     container: {
         fontFamily:'AirbnbCereal-Book',
         color: 'white',
         letterSpacing: '1px',
-        alignItems: 'center',
-        display: 'flex',
-        flexDirection: 'row',
-        height: '100%',
-        padding: '1em',
-    },
-
-
-    // create quotation
-    left: {
-        // backgroundColor: '#f8f8f8',
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-        width: '75%'
-    },
-    right: {
-        height: '100%',
-        width: '25%'
     },
 
-    leftFormContainer: {
+    // header
+    header: {
+        fontFamily:'AirbnbCereal-Bold',
+        fontSize: '1.5rem',
+        marginLeft: '0.5em',
+        color: '#212b36',
+        padding: '1em 0em 1em 0em'
+    },
+
+    form_container: {
         display: 'flex',
         flexDirection: 'row',
     },
-    lineItemContainer: {
+    table_wrapper: {
         margin: '0.5em',
     },
 
     // child of left form container
     customer: {
-        flex: 4,
+        flex: 1,
     },
     sales: {
-        flex: 3,
+        flex: 1,
     },
-    payment: {
-        flex: 3,
+
+    size_1: {
+        flex: 1,
+        marginLeft: '5px'
+    },
+    size_2: {
+        flex: 2,
     },
 
     // individual form container
@@ -56,14 +59,24 @@ export const useStyles = makeStyles({
     },
 
     text_field: {
-        padding: '3px 2px 3px 2px',
-        margin: '5px 2px 2px 2px',
-        borderRadius: '5px'
+        transitionDuration: '0.6s',
+        padding: '0px 1px 0px 1px',
+        margin: '10px 2px 2px 2px',
+        borderRadius: '5px',
+        backgroundColor: '#fff',
+        '&:hover fieldset': {
+            borderColor: '#212b36',
+            transitionDuration: '0.6s'
+        },
+        '&:focus': {
+            borderColor: '#212b36'
+        }
     },
 
     text_font: {
         color: '#212b36',
-        fontFamily: 'AirbnbCereal-Book'
+        fontFamily: 'AirbnbCereal-Book',
+        fontSize: '14px'
     },
 
     // right form container
@@ -141,17 +154,15 @@ export const useStyles = makeStyles({
 
     table_row: {
         backgroundColor: '#fff',
-        // color: 'white',
         borderColor: '#f3f6f8',
         borderStyle: 'dotted',
     },
 
-    table_cell_header: {
+    table_row_header: {
         color: '#637381',
         fontFamily:'AirbnbCereal-Medium',
         border: 'none',
-        whiteSpace: 'nowrap', 
-        // width: '200px'
+        whiteSpace: 'nowrap',
     },
 
     table_cell: {
@@ -241,7 +252,8 @@ export const useStyles = makeStyles({
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: '50%',
+        height: '100%',
+        width: '70%',
         padding: '50px 20px 50px 20px',
         backgroundColor: '#fff',
         border: 'none',
@@ -279,4 +291,204 @@ export const useStyles = makeStyles({
         fontSize: '14px',
     },
 
+    table_cell_icon_wrapper: {
+        display: 'flex',
+        alignItems: 'center', 
+        height: '100%',
+        width: '100%',
+        justifyContent: 'flex-end',
+        // marginRight: '100px'
+    },
+
+    more_vert: {
+        color: '#637381'
+    },
+    
+    moq_modal_button_container: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        padding: '24px'
+    },
+
+    edit_moq_button: {
+        marginRight: '1em',
+        padding: '0.8em 1.2em 0.8em 1.2em',
+        borderRadius: '8px',
+        fontFamily:'AirbnbCereal-Bold',
+        fontSize: '13px',
+        '&:hover': {
+            backgroundColor: '#bbc8d6',
+            borderColor: '#212b36',
+        }
+    },
+
+    moq_button: {
+        color: '#fff',
+        marginRight: '0px',
+        padding: '0.8em 1.2em 0.8em 1.2em',
+        borderRadius: '8px',
+        fontFamily:'AirbnbCereal-Bold',
+        fontSize: '13px',
+        backgroundColor: '#212b36',
+        '&:hover': {
+            backgroundColor: '#37485b',
+        }
+    },
+
+    modal_table: {
+        backgroundColor: '#f3f6f8',
+        color: 'white',
+        "&::before, &::after": {
+            borderColor: "red",
+        },
+        "& .MuiTableCell-sizeSmall": {
+            padding: "5px",
+        },
+        overflow: 'hidden'
+    },
+
+
+    /* price details */
+    pd_container: {
+        borderRadius: '15px',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '60%',
+        padding: '50px 20px 50px 20px',
+        backgroundColor: '#fff',
+        border: 'none',
+        boxShadow: 24,
+        p: 4,
+        '&:focus': {
+            border: 'none'
+        }
+    },
+
+    pd_modal_header: {
+        fontFamily:'AirbnbCereal-Medium',
+        padding: '24px 24px 16px 24px',
+        fontSize: '17px',
+        color: '#212b36',
+        width: '100%',
+        textAlign: 'left'
+    },
+
+    pd_modal_subtitle: {
+        fontFamily:'AirbnbCereal-Book',
+        fontSize: '13px',
+        padding: '0px 24px 0px 24px',
+    },
+
+    // edit modal
+    edit_container: {
+        width: 'calc(100% - 64px)',
+        borderRadius: '16px',
+        maxWidth: '444px',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        backgroundColor: '#fff',
+        border: 'none',
+        '&:focus': {
+            border: 'none'
+        },
+        boxShadow: 'rgba(0, 0, 0, 0.24) -40px 40px 80px -8px'
+    },
+
+    delete_pd_button: {
+        transition: '0.3s',
+        fontFamily: 'AirbnbCereal-Book',
+        padding: '0.5em 1em 0.5em 1em',
+        borderRadius: '8px',
+        fontFamily:'AirbnbCereal-Bold',
+        fontSize: '13px',
+        '&:hover': {
+            transition: '0.3s',
+        }
+    },
+
+    confirm_pd_button: {
+        color: '#fff',
+        backgroundColor: '#ff5630', 
+        marginRight: '10px',
+        '&:hover': {
+            backgroundColor: '#cd2600',
+        }
+    },
+
+    cancel_pd_button: {
+        color: '#212b36',
+        borderWidth: '1px',
+        '&:hover': {
+            backgroundColor: '#e2e2e2',
+            borderColor: '#212b36',
+        }
+    },
+
+    popover_container: {
+        '& .MuiPopover-paper': {
+            width: '150px', // Set the desired width
+            borderRadius: '8px',
+            boxShadow: 'rgba(145, 158, 171, 0.24) 0px 0px 20px 0px'
+        },
+    },
+
+    popover: {
+        flexDirection:'column',
+        padding: '4px',
+        borderRadius: '8px',
+    },
+
+    popover_button: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'flex-start',
+        padding: '10px 0px 10px 15px',
+        color: '#212b36'
+    },
+
+    popover_divider: {
+        border: 'none',
+        borderBottomStyle: 'dashed',
+        borderColor: 'rgba(145, 158, 171, 0.2)',
+        borderWidth: '0px 0px thin'
+    },
+
+    popover_text: {
+        marginLeft: '5px',
+        textTransform: 'capitalize',
+        fontSize: '1em'
+    },
+
+    // backdrop
+    backdrop: {
+        backgroundColor: 'rgba(22, 28, 36, 0.8)'
+    },
+
+    // edit price detail
+    edit_modal_form_row: {
+        display: 'flex',
+        flexDirection: 'row',
+        padding: '0px 24px 0px 24px',
+        fontSize: '10px'
+    },
+
+    edit_pd_button: {
+        transition: '0.3s',
+        color: '#fff',
+        marginRight: '10px',
+        padding: '0.8em 1.2em 0.8em 1.2em',
+        borderRadius: '8px',
+        fontFamily:'AirbnbCereal-Bold',
+        fontSize: '13px',
+        backgroundColor: '#2aad79',
+        '&:hover': {
+            transition: '0.3s',
+            backgroundColor: '#228d63',
+        }
+    },
 })

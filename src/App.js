@@ -3,16 +3,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Sidebar from './components/Sidebar.js';
 import Drawer from '@material-ui/core/Drawer';
 
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { Route, Switch } from 'react-router-dom';
 import CreateQuotation from './views/CreateQuotation.js';
+import GetQuotation from './views/GetQuotation.js';
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
-    height: '100vh',
-    width: '100vw',
     display: 'flex',
     backgroundColor: '#ffffff',
   },
@@ -27,8 +26,9 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: drawerWidth,
     backgroundColor: '#ffffff',
-    borderColor: '#f3f6f8',
-    borderStyle: 'dotted',
+    border: 'none',
+    borderRightColor: '#e9edef',
+    borderRightStyle: 'dashed',
   },
   content: {
     flexGrow: 1,
@@ -58,6 +58,7 @@ function App() {
         <Switch>
           <Route exact path="/" render={() => <div>WISELINK</div>} />
           <Route path="/quotation/create" render={() => <CreateQuotation />} />
+          <Route path="/quotation/get" render={() => <GetQuotation />} />
         </Switch>
       </main>
     </div>

@@ -1,10 +1,14 @@
 import * as React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Checkbox, withStyles, Modal, Box, Typography, TextField, TablePagination } from '@material-ui/core'
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Checkbox, withStyles, Modal, Box, Typography, TextField, TablePagination, IconButton, Popover } from '@material-ui/core'
 import { useStyles } from '../styles'
 import AddIcon from '@material-ui/icons/Add';
-import { DeleteOutline, Edit } from '@material-ui/icons';
 import { useState } from 'react';
-import { useEffect } from 'react';
+import LineItemForm from './LineItemForm';
+import { getKey } from '../utils';
+import { GreenCheckbox } from './GreenCheckbox';
+import DeleteForm from './DeleteForm';
+import CustomRow from './CustomRow';
+
 function createData(checked, line_number, cpn, mpn, description, annual_usage, build_site, business, brand, spn, spq, packaging) {
   return { checked, line_number, cpn, mpn, description, annual_usage, build_site, business, brand, spn, spq, packaging };
 }
@@ -17,16 +21,6 @@ const rows = [
   createData(false, '500', 'CPN500', 'MPN500', 'random description', 5000, 'site#5', 'business#5', 'brand#5', 'SPN#5', 'SPQ#5', 'PKG#5'),
   createData(false, '600', 'CPN600', 'MPN600', 'random description', 6000, 'site#6', 'business#6', 'brand#6', 'SPN#6', 'SPQ#6', 'PKG#6'),
 ];
-
-const GreenCheckbox = withStyles({
-    root: {
-        color: 'gray',
-        '&$checked': {
-            color: '#01a76e',
-        },
-    },
-    checked: {},
-  })((props) => <Checkbox color="default" {...props} />);
 
 export default function BasicTable() {
 
@@ -41,7 +35,7 @@ export default function BasicTable() {
      *      }
      * ]
      */
-    const [lineItems, setLineItems] = useState([])
+    const [lineItems, setLineItems] = useState(rows)
     const [modal, setModal] = useState(false)
     const [all, setAll] = useState(false)
     const [newItem, setNewItem] = useState({
@@ -56,16 +50,17 @@ export default function BasicTable() {
         spn: '',
         spq: '',
         packaging: '',
+        price_details: []
     })
     const [rowsPerPage ,setRowsPerPage] = useState(5)
-    const [page, setPage] = useState(1)
-    const [order, setOrder] = useState('asc');
-    const [orderBy, setOrderBy] = useState('calories');
-
-    useEffect(() => {
-        console.log('page render')
-        setLineItems(rows)
-    }, []) 
+    const [page, setPage] = useState(0)
+    const [deleteLineItem, setDeleteLineItem] = useState({})
+    const [editModal, setEditModal] = useState(false)
+    const [deleteModal, setDeleteModal] = useState(false)
+    const [editPd, setEditPd] = useState({})
+    const [anchorEl, setAnchorEl] = useState(null)
+    const [selectLineItem, setSelectLineItem] = useState({})
+    const [type, setType] = useState("")
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -74,10 +69,6 @@ export default function BasicTable() {
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
-    }
-
-    const getKey = (row) => {
-        return row.line_number + ".." + row.cpn + ".." + row.mpn
     }
 
     const getSelectedCount = () => {
@@ -104,12 +95,13 @@ export default function BasicTable() {
             spn: '',
             spq: '',
             packaging: '',
+            price_details: []
         })
     }
 
     const closeModal = () => {
         resetNewItem()
-        setModal(!modal)
+        setModal(false)
     }
 
     const addLineItem = () => {
@@ -117,25 +109,27 @@ export default function BasicTable() {
         closeModal()
     }
 
-    const updateLineItem = () => {
-
+    const updateLineItem = (item) => {
+        const updated = lineItems
+        for (let i = 0; i < updated.length; i++) {
+            if (updated[i] == editPd) {
+                updated[i] = item
+            }
+        }
+        setLineItems(updated)
+        closeModal()
     }
 
-    const deleteLineItem = () => {
-
+    const closeDeleteLineItem = () => {
+        setDeleteModal({})
+        setDeleteModal(!deleteModal)
     }
 
-
-    const addPriceDetails = () => {
-
-    }
-
-    const updatePriceDetails = () => {
-
-    }
-
-    const deletePriceDetails = () => {
-
+    const removeLineItem = (item) => {
+        const updated = lineItems.filter((el) => el !== item)
+        setLineItems(updated)
+        setSelectLineItem({})
+        setDeleteModal(false)
     }
 
     const handleCheck = (key) => {
@@ -147,97 +141,84 @@ export default function BasicTable() {
         setLineItems(updatedItems)
     }
 
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - lineItems.length) : 0;
-    const displayedData = lineItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    const handleMore = (e, row) => {
+        setAnchorEl(e.currentTarget)
+        setSelectLineItem(row)
+        setNewItem(row)
+    }
+
+    const handleMoreClose = () => {
+        setAnchorEl(null);
+    }
+
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - lineItems.length) : 0
+    const displayedData = lineItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    const moreOpen = Boolean(anchorEl)
+    const moreId = moreOpen ? 'simple-popover' : undefined
 
     return (
-        <div>
+        <>
             <div className={classes.button_container}>
-                <Button variant="outlined" className={classes.edit_button} startIcon={<Edit />}>Edit Item</Button>
-                <Button onClick={() => setModal(!modal)} variant="contained" className={classes.button} startIcon={<AddIcon />}>New Item</Button>
+                <Button onClick={() => {
+                    setType("create")
+                    setModal(!modal)
+                }} variant="contained" className={classes.button} startIcon={<AddIcon />}>Line Item</Button>
             </div>
-            <TableContainer component="div" className={classes.table_container}>
-                <Table aria-label="simple table" className={`${classes.table} ${all && classes.table_all_selected}`} size='small'>
+            <TableContainer component={Paper} className={classes.table_container}>
+                <Table aria-label="simple table" className={`${classes.table}`} size='small'>
                     <TableHead>
-                        <TableRow>
-                            <TableCell>
+                        <TableRow className={classes.table_row_header}>
+                            {/* <TableCell>
                                 <GreenCheckbox
                                     checked={all}
                                     onChange={() => {setAll(!all)}}
                                     inputProps={{ 'aria-label': 'controlled' }}
                                 />
-                            </TableCell>
+                            </TableCell> */}
                             {
                                 !all ? (
                                     <>
-                                        <TableCell style={{width: '120px'}} className={classes.table_cell_header} align="center">Line no.</TableCell>
-                                        <TableCell style={{width: '100px'}} className={classes.table_cell_header} align="center">CPN</TableCell>
-                                        <TableCell style={{width: '100px'}} className={classes.table_cell_header} align="center">MPN</TableCell>
-                                        <TableCell style={{width: '100px'}} className={classes.table_cell_header} align="center">Annual Usage</TableCell>
-                                        <TableCell style={{width: '100px'}} className={classes.table_cell_header} align="center">Build Site</TableCell>
-                                        <TableCell style={{width: '100px'}} className={classes.table_cell_header} align="center">Business</TableCell>
-                                        <TableCell style={{width: '100px'}} className={classes.table_cell_header} align="center">Brand</TableCell>
-                                        <TableCell style={{width: '100px'}} className={classes.table_cell_header} align="center">SPN</TableCell>
-                                        <TableCell style={{width: '100px'}} className={classes.table_cell_header} align="center">SPQ</TableCell>
-                                        <TableCell style={{width: '100px'}} className={classes.table_cell_header} align="center">Packaging</TableCell>
-                                        <TableCell style={{width: '100px'}} className={classes.table_cell_header} align="center">Description</TableCell>
+                                        <TableCell align="center">Line no.</TableCell>
+                                        <TableCell align="center">CPN</TableCell>
+                                        <TableCell align="center">MPN</TableCell>
+                                        <TableCell align="center">Annual Usage</TableCell>
+                                        <TableCell align="center">Build Site</TableCell>
+                                        <TableCell align="center">Business</TableCell>
+                                        <TableCell align="center">Brand</TableCell>
+                                        <TableCell align="center">SPN</TableCell>
+                                        <TableCell align="center">SPQ</TableCell>
+                                        <TableCell align="center">Packaging</TableCell>
+                                        <TableCell align="center">Description</TableCell>
+                                        <TableCell/>
                                     </>
                                 ): 
                                 ( 
                                     <>
-                                        <TableCell style={{width: '120px'}} className={classes.table_cell_header}>{getSelectedCount()} Selected</TableCell>
-                                        <TableCell style={{width: '100px'}}/>
-                                        <TableCell style={{width: '100px'}}/>
-                                        <TableCell style={{width: '100px'}}/>
-                                        <TableCell style={{width: '100px'}}/>
-                                        <TableCell style={{width: '100px'}}/>
-                                        <TableCell style={{width: '100px'}}/>
-                                        <TableCell style={{width: '100px'}}/>
-                                        <TableCell style={{width: '100px'}}/>
-                                        <TableCell style={{width: '100px'}}/>
-                                        <TableCell style={{width: '100px'}}/>
+                                        <TableCell>{getSelectedCount()} Selected</TableCell>
+                                        <TableCell/>
+                                        <TableCell/>
+                                        <TableCell/>
+                                        <TableCell/>
+                                        <TableCell/>
+                                        <TableCell/>
+                                        <TableCell/>
+                                        <TableCell/>
+                                        <TableCell/>
+                                        <TableCell/>
+                                        <TableCell/>
                                     </>
                                 )
                             }
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {displayedData.map((row) => (
-                            <TableRow
-                            key={row.name}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            className={classes.table_row}
-                            >
-                                <TableCell className={classes.table_cell} component="th" scope="row">
-                                    <GreenCheckbox
-                                        checked={row.checked}
-                                        onChange={() => handleCheck(getKey(row))}
-                                        inputProps={{ 'aria-label': 'controlled' }}
-                                    />
-                                </TableCell>
-                                <TableCell style={{width: '120px'}} className={classes.table_cell}>
-                                    {row.line_number}
-                                </TableCell>
-                                <TableCell style={{width: '100px'}} className={classes.table_cell} align="left">{row.cpn}</TableCell>
-                                <TableCell style={{width: '100px'}} className={classes.table_cell} align="center">{row.mpn}</TableCell>
-                                <TableCell style={{width: '100px'}} className={classes.table_cell} align="center">{row.annual_usage}</TableCell>
-                                <TableCell style={{width: '100px'}} className={classes.table_cell} align="center">{row.build_site}</TableCell>
-                                <TableCell style={{width: '100px'}} className={classes.table_cell} align="center">{row.business}</TableCell>
-                                <TableCell style={{width: '100px'}} className={classes.table_cell} align="center">{row.brand}</TableCell>
-                                <TableCell style={{width: '100px'}} className={classes.table_cell} align="center">{row.spn}</TableCell>
-                                <TableCell style={{width: '100px'}} className={classes.table_cell} align="center">{row.spq}</TableCell>
-                                <TableCell style={{width: '100px'}} className={classes.table_cell} align="center">{row.packaging}</TableCell>
-                                <TableCell style={{width: '100px'}} className={classes.table_cell} align="center">{row.description}</TableCell>
-                            </TableRow>
+                        {displayedData.map((row, index) => (
+                            <CustomRow key={index} k={index} value={row} handleCheck={handleCheck} popoverId={moreId} popoverStatus={moreOpen} popoverOpen={handleMore} popoverClose={handleMoreClose} anchor={anchorEl} setDeleteModal={setDeleteModal} setModal={setModal} setType={setType}/>
                         ))}
                         {emptyRows > 0 && (
-                            <TableRow
-                            style={{
-                              height: 83.500 * emptyRows,
-                            }}
-                          >
-                            <TableCell style={{border:'none'}} />
-                          </TableRow>
+                            <TableRow style={{ height: 65.5 * emptyRows }}>
+                                <TableCell style={{ border: 'none' }} />
+                            </TableRow>
                         )}
                     </TableBody>
                 </Table>
@@ -251,162 +232,8 @@ export default function BasicTable() {
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
-            <Modal
-                open={modal}
-                onClose={closeModal}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box className={classes.modal_container}>
-                    <Typography className={classes.modal_header}>Create a new Line Item</Typography>
-                    <Typography className={classes.modal_subtext}>ensure all fields marked with * are filled</Typography>
-                    <div className={classes.modal_form_row}>
-                        <TextField
-                            className={classes.text_field}
-                            label="Line number"
-                            required
-                            defaultValue={newItem.line_number}
-                            variant="outlined"
-                            fullWidth={true}
-                            InputProps={{
-                                className: classes.text_font,
-                            }}
-                            onChange={(e) => {newItem.line_number = e.target.value}}
-                        />
-                        <TextField
-                            className={classes.text_field}
-                            label="CPN"
-                            required
-                            defaultValue={newItem.cpn}
-                            variant="outlined"
-                            fullWidth={true}
-                            InputProps={{
-                                className: classes.text_font,
-                            }}
-                            onChange={(e) => {newItem.cpn = e.target.value}}
-                        />
-                        <TextField
-                            className={classes.text_field}
-                            label="MPN"
-                            required
-                            defaultValue={newItem.mpn}
-                            variant="outlined"
-                            fullWidth={true}
-                            InputProps={{
-                                className: classes.text_font,
-                            }}
-                            onChange={(e) => {newItem.mpn = e.target.value}}
-                        />
-                    </div>
-                    <div className={classes.modal_form_row}>
-                        <TextField
-                            className={classes.text_field}
-                            label="Annual usage"
-                            required
-                            defaultValue={newItem.annual_usage}
-                            variant="outlined"
-                            fullWidth={true}
-                            InputProps={{
-                                className: classes.text_font,
-                            }}
-                            onChange={(e) => {newItem.annual_usage = e.target.value}}
-                        />
-                        <TextField
-                            className={classes.text_field}
-                            label="Build site"
-                            required
-                            defaultValue={newItem.build_site}
-                            variant="outlined"
-                            fullWidth={true}
-                            InputProps={{
-                                className: classes.text_font,
-                            }}
-                            onChange={(e) => {newItem.build_site = e.target.value}}
-                        />
-                        <TextField
-                            className={classes.text_field}
-                            label="Business"
-                            required
-                            defaultValue={newItem.business}
-                            variant="outlined"
-                            fullWidth={true}
-                            InputProps={{
-                                className: classes.text_font,
-                            }}
-                            onChange={(e) => {newItem.business = e.target.value}}
-                        />
-                    </div>
-                    <div className={classes.modal_form_row}>
-                        <TextField
-                            className={classes.text_field}
-                            label="Brand"
-                            required
-                            defaultValue={newItem.brand}
-                            variant="outlined"
-                            fullWidth={true}
-                            InputProps={{
-                                className: classes.text_font,
-                            }}
-                            onChange={(e) => {newItem.brand = e.target.value}}
-                        />
-                        <TextField
-                            className={classes.text_field}
-                            label="SPN"
-                            required
-                            defaultValue={newItem.spn}
-                            variant="outlined"
-                            fullWidth={true}
-                            InputProps={{
-                                className: classes.text_font,
-                            }}
-                            onChange={(e) => {newItem.spn = e.target.value}}
-                        />
-                        <TextField
-                            className={classes.text_field}
-                            label="SPQ"
-                            required
-                            defaultValue={newItem.spq}
-                            variant="outlined"
-                            fullWidth={true}
-                            InputProps={{
-                                className: classes.text_font,
-                            }}
-                            onChange={(e) => {newItem.spq = e.target.value}}
-                        />
-                        <TextField
-                            className={classes.text_field}
-                            label="Packaging"
-                            required
-                            defaultValue={newItem.packaging}
-                            variant="outlined"
-                            fullWidth={true}
-                            InputProps={{
-                                className: classes.text_font,
-                            }}
-                            onChange={(e) => {newItem.packaging = e.target.value}}
-                        />
-                    </div>
-                    <div className={classes.modal_form_row}>
-                        <TextField
-                            label="Description"
-                            className={classes.text_field}
-                            defaultValue={newItem.description}
-                            variant="outlined"
-                            fullWidth={true}
-                            InputProps={{
-                                className: classes.text_font,
-                            }}
-                            onChange={(e) => {newItem.description = e.target.value}}
-                            minRows={4}
-                            multiline
-                        />
-                    </div>
-                    <div className={classes.modal_button_container}>
-                        <Button variant="outlined" onClick={closeModal} className={classes.edit_button}>Cancel</Button>
-                        <Button variant="contained" onClick={addLineItem} className={classes.button}>Create & Add</Button>
-                    </div>
-                </Box>
-            </Modal>
-        </div>
+            <LineItemForm modal={modal} closeModal={closeModal} newItem={newItem} addLineItem={addLineItem} updateLineItem={updateLineItem} type={type}/>
+            <DeleteForm confirm={removeLineItem} cancel={closeDeleteLineItem} open={deleteModal} item={selectLineItem} name="Line item"/>
+        </>
     );
 }
