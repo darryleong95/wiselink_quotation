@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useStyles } from '../styles'
 import { Box, Button, Modal, Typography } from '@material-ui/core'
 import TextField from './TextField'
+import InputSpacer from './InputSpace';
 
 const PriceDetailForm = (props) => {
     const { open, closeModal, addMoq } = props
@@ -9,8 +10,6 @@ const PriceDetailForm = (props) => {
     const [moq, setMoq] = useState({
         moq: 0,
         customer_price: 0,
-        supplier_currency: "",
-        supplier_price: 0,
         lead_time: 0,
         cancellation: 0,
     })
@@ -27,7 +26,7 @@ const PriceDetailForm = (props) => {
     }
 
     const add = () => {
-        if (!moq.moq || !moq.customer_price || !moq.supplier_currency || !moq.supplier_price || !moq.lead_time || !moq.cancellation) {
+        if (!moq.moq || !moq.customer_price || !moq.lead_time || !moq.cancellation) {
             alert('ensure all fields are filled up')
             return
         }
@@ -52,6 +51,7 @@ const PriceDetailForm = (props) => {
                         handle={(e) => {moq.moq = e.target.value}}
                         type="number"
                     />
+                    <InputSpacer/>
                     <TextField
                         value={moq.customer_price}
                         label="Customer price"
@@ -61,25 +61,12 @@ const PriceDetailForm = (props) => {
                 </div>
                 <div className={classes.edit_modal_form_row}>
                     <TextField
-                        value={moq.supplier_price}
-                        label="Supplier price"
-                        handle={(e) => {moq.supplier_price = e.target.value}}
-                        type="number"
-                    />
-                    <TextField
-                        value={moq.supplier_currency}
-                        label="Supplier currency"
-                        handle={(e) => {moq.supplier_currency = e.target.value}}
-                        type="text"
-                    />
-                </div>
-                <div className={classes.edit_modal_form_row}>
-                    <TextField
                         value={moq.lead_time}
                         label="Lead Time (weeks)"
                         handle={(e) => {moq.lead_time = e.target.value}}
                         type="number"
                     />
+                    <InputSpacer/>
                     <TextField
                         value={moq.cancellation}
                         label="Cancellation (weeks)"
@@ -87,7 +74,7 @@ const PriceDetailForm = (props) => {
                         type="number"
                     />
                 </div>
-                <div className={classes.moq_modal_button_container}>
+                <div className={`${classes.moq_modal_button_container} ${classes.moq_modal_button_container_padding}`}>
                     <Button onClick={add} variant="contained" className={classes.edit_pd_button}>Add & Save</Button>
                     <Button onClick={closeModal} variant="outlined" className={`${classes.delete_pd_button} ${classes.cancel_pd_button}`}>Cancel</Button>
                 </div>

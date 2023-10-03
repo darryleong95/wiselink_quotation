@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '1.5rem',
         marginLeft: '0.5em',
         color: '#212b36',
-        padding: '1em 0em 1em 0em'
+        padding: '1em 0em 0.5em 0em'
     },
     container: {
         color: 'white',

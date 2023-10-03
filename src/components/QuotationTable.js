@@ -9,17 +9,17 @@ import { GreenCheckbox } from './GreenCheckbox';
 import DeleteForm from './DeleteForm';
 import CustomRow from './CustomRow';
 
-function createData(checked, line_number, cpn, mpn, description, annual_usage, build_site, business, brand, spn, spq, packaging) {
-  return { checked, line_number, cpn, mpn, description, annual_usage, build_site, business, brand, spn, spq, packaging };
+function createData(checked, line_number, cpn, mpn, description, annual_usage, project, build_site, business, supplier, brand, spq, packaging, target_price, updates) {
+  return { checked, line_number, cpn, mpn, description, annual_usage, project, build_site, business, supplier, brand, spq, packaging, target_price, updates };
 }
 
 const rows = [
-  createData(false, '100', 'CPN100', 'MPN100', 'random description', 1000, 'site#1', 'business#1', 'brand#1', 'SPN#1', 'SPN#1', 'PKG#1'),
-  createData(false, '200', 'CPN200', 'MPN200', 'random description', 2000, 'site#2', 'business#2', 'brand#2', 'SPN#2', 'SPQ#2', 'PKG#2'),
-  createData(false, '300', 'CPN300', 'MPN300', 'random description', 3000, 'site#3', 'business#3', 'brand#3', 'SPN#3', 'SPQ#3', 'PKG#3'),
-  createData(false, '400', 'CPN400', 'MPN400', 'random description', 4000, 'site#4', 'business#4', 'brand#4', 'SPN#4', 'SPQ#4', 'PKG#4'),
-  createData(false, '500', 'CPN500', 'MPN500', 'random description', 5000, 'site#5', 'business#5', 'brand#5', 'SPN#5', 'SPQ#5', 'PKG#5'),
-  createData(false, '600', 'CPN600', 'MPN600', 'random description', 6000, 'site#6', 'business#6', 'brand#6', 'SPN#6', 'SPQ#6', 'PKG#6'),
+  createData(false, '100', 'CPN100', 'MPN100', 'random description', 1000, 'project#1', 'site#1', 'business#1', 'supplier#1', 'brand#1', 'SPQ#1', 'PKG#1', 10.000, '-'),
+  createData(false, '200', 'CPN200', 'MPN200', 'random description', 2000, 'project#2','site#2', 'business#2', 'supplier#2', 'brand#2', 'SPQ#2', 'PKG#2', 10.000, '-'),
+  createData(false, '300', 'CPN300', 'MPN300', 'random description', 3000, 'project#3','site#3', 'business#3', 'supplier#3', 'brand#3', 'SPQ#3', 'PKG#3', 10.000, '-'),
+  createData(false, '400', 'CPN400', 'MPN400', 'random description', 4000, 'project#4','site#4', 'business#4', 'supplier#4', 'brand#4', 'SPQ#4', 'PKG#4', 10.000, '-'),
+  createData(false, '500', 'CPN500', 'MPN500', 'random description', 5000, 'project#5','site#5', 'business#5', 'supplier#5', 'brand#5', 'SPQ#5', 'PKG#5', 10.000, '-'),
+  createData(false, '600', 'CPN600', 'MPN600', 'random description', 6000, 'project#6','site#6', 'business#6', 'supplier#6', 'brand#6', 'SPQ#6', 'PKG#6', 10.000, '-')
 ];
 
 export default function BasicTable() {
@@ -39,17 +39,20 @@ export default function BasicTable() {
     const [modal, setModal] = useState(false)
     const [all, setAll] = useState(false)
     const [newItem, setNewItem] = useState({
+        line_number: '',
         cpn: '',
         mpn: '',
         description: '',
-        build_site: '',
         annual_usage: '',
-        line_number: '',
+        project: '',
+        build_site: '',
         business: '',
+        supplier: '',
         brand: '',
-        spn: '',
         spq: '',
         packaging: '',
+        target_price: '',
+        updates: '',
         price_details: []
     })
     const [rowsPerPage ,setRowsPerPage] = useState(5)
@@ -93,8 +96,10 @@ export default function BasicTable() {
             business: '',
             brand: '',
             spn: '',
-            spq: '',
             packaging: '',
+            updates: '',
+            target_price: '',
+            supplier: '',
             price_details: []
         })
     }
@@ -162,7 +167,7 @@ export default function BasicTable() {
                 <Button onClick={() => {
                     setType("create")
                     setModal(!modal)
-                }} variant="contained" className={classes.button} startIcon={<AddIcon />}>Line Item</Button>
+                }} variant="contained" className={classes.button} startIcon={<AddIcon style={{ fontSize: '14px' }} />}>Line Item</Button>
             </div>
             <TableContainer component={Paper} className={classes.table_container}>
                 <Table aria-label="simple table" className={`${classes.table}`} size='small'>
@@ -181,20 +186,22 @@ export default function BasicTable() {
                                         <TableCell align="center">Line no.</TableCell>
                                         <TableCell align="center">CPN</TableCell>
                                         <TableCell align="center">MPN</TableCell>
-                                        <TableCell align="center">Annual Usage</TableCell>
+                                        <TableCell align="center">Description</TableCell>
+                                        <TableCell align="center">Usage</TableCell>
                                         <TableCell align="center">Build Site</TableCell>
                                         <TableCell align="center">Business</TableCell>
+                                        <TableCell align="center">Supplier</TableCell>
                                         <TableCell align="center">Brand</TableCell>
-                                        <TableCell align="center">SPN</TableCell>
                                         <TableCell align="center">SPQ</TableCell>
                                         <TableCell align="center">Packaging</TableCell>
-                                        <TableCell align="center">Description</TableCell>
-                                        <TableCell/>
+                                        <TableCell align="center">Target Price</TableCell>
+                                        <TableCell align="center">Update</TableCell>
                                     </>
                                 ): 
                                 ( 
                                     <>
-                                        <TableCell>{getSelectedCount()} Selected</TableCell>
+                                        <TableCell/>
+                                        <TableCell/>
                                         <TableCell/>
                                         <TableCell/>
                                         <TableCell/>
@@ -216,7 +223,7 @@ export default function BasicTable() {
                             <CustomRow key={index} k={index} value={row} handleCheck={handleCheck} popoverId={moreId} popoverStatus={moreOpen} popoverOpen={handleMore} popoverClose={handleMoreClose} anchor={anchorEl} setDeleteModal={setDeleteModal} setModal={setModal} setType={setType}/>
                         ))}
                         {emptyRows > 0 && (
-                            <TableRow style={{ height: 65.5 * emptyRows }}>
+                            <TableRow style={{ height: 55.5 * emptyRows }}>
                                 <TableCell style={{ border: 'none' }} />
                             </TableRow>
                         )}

@@ -26,14 +26,16 @@ const CustomRow = ({ value, popoverId, popoverStatus, popoverOpen, popoverClose,
             </TableCell>
             <TableCell className={classes.table_cell} align="left">{value.cpn}</TableCell>
             <TableCell className={classes.table_cell} align="center">{value.mpn}</TableCell>
+            <TableCell className={classes.table_cell} align="center">{value.description}</TableCell>
             <TableCell className={classes.table_cell} align="center">{value.annual_usage}</TableCell>
             <TableCell className={classes.table_cell} align="center">{value.build_site}</TableCell>
             <TableCell className={classes.table_cell} align="center">{value.business}</TableCell>
+            <TableCell className={classes.table_cell} align="center">{value.supplier}</TableCell>
             <TableCell className={classes.table_cell} align="center">{value.brand}</TableCell>
-            <TableCell className={classes.table_cell} align="center">{value.spn}</TableCell>
             <TableCell className={classes.table_cell} align="center">{value.spq}</TableCell>
             <TableCell className={classes.table_cell} align="center">{value.packaging}</TableCell>
-            <TableCell className={classes.table_cell} align="center">{value.description}</TableCell>
+            <TableCell className={classes.table_cell} align="center">{value.target_price}</TableCell>
+            <TableCell className={classes.table_cell} align="center">{value.updates}</TableCell>
             <TableCell className={classes.table_cell} align="right">
                 <div className={classes.table_cell_icon_wrapper}>
                     <IconButton onClick={(e) => {popoverOpen(e, item)}} aria-label="edit" size="small" className={classes.more_vert}>

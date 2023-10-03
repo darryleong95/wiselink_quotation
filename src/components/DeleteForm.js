@@ -22,7 +22,7 @@ const DeleteForm = (props) => {
             <Box className={classes.edit_container}>
                 <Typography className={`${classes.modal_header} ${classes.pd_modal_header}`}>Delete {name}?</Typography>
                 <Typography className={`${classes.pd_modal_subtitle}`}>Are you sure you want to delete?</Typography>
-                <div className={classes.moq_modal_button_container}>
+                <div className={`${classes.moq_modal_button_container} ${classes.moq_modal_button_container_padding}`}>
                     <Button onClick={() => {confirm(item)}} variant="contained" className={`${classes.delete_pd_button} ${classes.confirm_pd_button}`}>Delete</Button>
                     <Button onClick={cancel} variant="outlined" className={`${classes.delete_pd_button} ${classes.cancel_pd_button}`}>Cancel</Button>
                 </div>

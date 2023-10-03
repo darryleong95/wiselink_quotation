@@ -2,6 +2,34 @@ import { makeStyles, colors } from '@material-ui/core'
 
 export const useStyles = makeStyles({
 
+    // buttons
+    create: {
+        margin: '0px',
+        padding: '10px 20px',
+        borderRadius: '8px',
+        fontFamily:'AirbnbCereal-Medium',
+        fontSize: '12px',
+        backgroundColor: '#e1f6e6',
+        color: '#3b9c6c',
+        '&:hover': {
+            backgroundColor: '#b4e8c0',
+        }
+    },
+
+    retrieve: {
+        margin: '0px',
+        marginRight: '10px',
+        padding: '10px 20px',
+        borderRadius: '8px',
+        fontFamily:'AirbnbCereal-Medium',
+        fontSize: '12px',
+        backgroundColor: '#fff2de',
+        color: '#bf7b24',
+        '&:hover': {
+            backgroundColor: '#ffdba3',
+        }
+    },
+
     // component containers
     wrapper: {
         padding: '1em 6em',
@@ -23,7 +51,7 @@ export const useStyles = makeStyles({
         fontSize: '1.5rem',
         marginLeft: '0.5em',
         color: '#212b36',
-        padding: '1em 0em 1em 0em'
+        padding: '1em 0em 0.5em 0em'
     },
 
     form_container: {
@@ -137,13 +165,13 @@ export const useStyles = makeStyles({
     },
 
     table: {
-        backgroundColor: '#f3f6f8',
+        backgroundColor: '#e3eaef',
         color: 'white',
         "&::before, &::after": {
             borderColor: "red",
         },
         "& .MuiTableCell-sizeSmall": {
-            padding: "20px",
+            padding: "15px",
         },
         overflow: 'hidden'
     },
@@ -165,6 +193,13 @@ export const useStyles = makeStyles({
         whiteSpace: 'nowrap',
     },
 
+    table_cell_header: {
+        color: '#262f3a',
+        fontFamily:'AirbnbCereal-Medium',
+        border: 'none',
+        // width: '100px'
+    },
+
     table_cell: {
         color: '#262f3a',
         fontFamily:'AirbnbCereal-Book',
@@ -180,11 +215,11 @@ export const useStyles = makeStyles({
 
     edit_button: {
         marginRight: '1em',
-        marginBottom: '1em',
-        padding: '0.8em 1.2em 0.8em 1.2em',
+        marginBottom: '0.7em',
+        padding: '0.8em 0.9em',
         borderRadius: '8px',
         fontFamily:'AirbnbCereal-Bold',
-        fontSize: '13px',
+        fontSize: '12px',
         '&:hover': {
             backgroundColor: '#bbc8d6',
             borderColor: '#212b36',
@@ -194,17 +229,16 @@ export const useStyles = makeStyles({
     button: {
         color: '#fff',
         marginRight: '0px',
-        marginBottom: '1em',
-        padding: '0.8em 1.2em 0.8em 1.2em',
+        marginBottom: '0.7em',
+        padding: '0.8em 0.9em',
         borderRadius: '8px',
-        fontFamily:'AirbnbCereal-Bold',
-        fontSize: '13px',
+        fontFamily:'AirbnbCereal-Medium',
+        fontSize: '12px',
         backgroundColor: '#212b36',
         '&:hover': {
             backgroundColor: '#37485b',
         }
     },
-
 
     // 
     label: {
@@ -247,26 +281,34 @@ export const useStyles = makeStyles({
 
     // modal
     modal_container: {
-        borderRadius: '15px',
+        overflow: 'auto',
+        maxHeight: '87vh',
+        borderRadius: '8px',
         position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        height: '100%',
+        height: 'auto',
         width: '70%',
         padding: '50px 20px 50px 20px',
         backgroundColor: '#fff',
         border: 'none',
         boxShadow: 24,
-        p: 4,
         '&:focus': {
             border: 'none'
-        }
+        },
+    },
+
+    modal_form: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%'
     },
 
     modal_form_row: {
+        flex: 1,
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
     },
 
     modal_button_container: {
@@ -280,7 +322,8 @@ export const useStyles = makeStyles({
         padding: '3px 2px 0px 2px',
         color: '#212b36',
         fontFamily: 'AirbnbCereal-Bold',
-        fontSize: '20px'
+        fontSize: '20px',
+        marginBottom: '10px'
     },
 
     modal_subtext: {
@@ -308,7 +351,6 @@ export const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        padding: '24px'
     },
 
     edit_moq_button: {
@@ -326,13 +368,13 @@ export const useStyles = makeStyles({
     moq_button: {
         color: '#fff',
         marginRight: '0px',
-        padding: '0.8em 1.2em 0.8em 1.2em',
+        // padding: '0.6em',
         borderRadius: '8px',
-        fontFamily:'AirbnbCereal-Bold',
-        fontSize: '13px',
-        backgroundColor: '#212b36',
+        fontFamily:'AirbnbCereal-Medium',
+        fontSize: '12px',
+        backgroundColor: '#01a76e',
         '&:hover': {
-            backgroundColor: '#37485b',
+            backgroundColor: '#269d6e',
         }
     },
 
@@ -343,7 +385,8 @@ export const useStyles = makeStyles({
             borderColor: "red",
         },
         "& .MuiTableCell-sizeSmall": {
-            padding: "5px",
+            // padding: "15px 25px 15px 25px",
+            height: '50px'
         },
         overflow: 'hidden'
     },
@@ -369,7 +412,6 @@ export const useStyles = makeStyles({
 
     pd_modal_header: {
         fontFamily:'AirbnbCereal-Medium',
-        padding: '24px 24px 16px 24px',
         fontSize: '17px',
         color: '#212b36',
         width: '100%',
@@ -379,12 +421,13 @@ export const useStyles = makeStyles({
     pd_modal_subtitle: {
         fontFamily:'AirbnbCereal-Book',
         fontSize: '13px',
-        padding: '0px 24px 0px 24px',
+        padding: '0px',
     },
 
     // edit modal
     edit_container: {
         width: 'calc(100% - 64px)',
+        padding: '24px',
         borderRadius: '16px',
         maxWidth: '444px',
         position: 'absolute',
@@ -426,6 +469,15 @@ export const useStyles = makeStyles({
         '&:hover': {
             backgroundColor: '#e2e2e2',
             borderColor: '#212b36',
+        }
+    },
+
+    green_pd_button: {
+        color: '#fff',
+        backgroundColor: '#01a76e',
+        marginRight: '10px',
+        '&:hover': {
+            backgroundColor: '#269d6e',
         }
     },
 
@@ -491,4 +543,27 @@ export const useStyles = makeStyles({
             backgroundColor: '#228d63',
         }
     },
+
+
+    // table field
+    underline: {    
+        '&::before': {
+            borderBottom: 'none', // Remove the underline
+        },
+        '&::after': {
+            borderBottom: 'none', // Remove the underline when focused
+        },
+        '&:hover:not($disabled):before': {
+            // borderBottom: 'none', // Remove the underline on hover
+            borderBottomWidth: '1px',
+            borderBottomColor: '#212b36',
+        },
+        '&:focus:not($disabled):before': {
+            // borderBottom: 'none', // Remove the underline on focus
+            borderBottomWidth: '1px',
+            borderBottomColor: '#212b36',
+        },
+    },
+
+    disabled: {}
 })

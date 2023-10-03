@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useStyles } from '../styles'
 import { Box, Button, Modal, Typography } from '@material-ui/core';
 import TextField from './TextField'
+import InputSpacer from './InputSpace';
 
 const EditDetailForm = (props) => {
     const { save, cancel, open, item } = props
@@ -13,7 +14,7 @@ const EditDetailForm = (props) => {
     }, [item]) 
 
     const savePd = () => {
-        if (!update.moq || !update.customer_price || !update.supplier_currency || !update.supplier_price || !update.lead_time || !update.cancellation) {
+        if (!update.moq || !update.customer_price || !update.lead_time || !update.cancellation) {
             alert('ensure all fields are filled up')
             return
         }
@@ -42,6 +43,7 @@ const EditDetailForm = (props) => {
                         handle={(e) => {update.moq = e.target.value}}
                         type="number"
                     />
+                    <InputSpacer/>
                     <TextField
                         value={update.customer_price}
                         label="Customer Price"
@@ -51,25 +53,12 @@ const EditDetailForm = (props) => {
                 </div>
                 <div className={classes.edit_modal_form_row}>
                     <TextField
-                        value={update.supplier_price}
-                        label="Supplier price"
-                        handle={(e) => {update.supplier_price = e.target.value}}
-                        type="number"
-                    />
-                    <TextField
-                        value={update.supplier_currency}
-                        label="Supplier currency"
-                        handle={(e) => {update.supplier_currency = e.target.value}}
-                        type="text"
-                    />
-                </div>
-                <div className={classes.edit_modal_form_row}>
-                    <TextField
                         value={update.lead_time}
                         label="Lead Time (weeks)"
                         handle={(e) => {update.lead_time = e.target.value}}
                         type="number"
                     />
+                    <InputSpacer/>
                     <TextField
                         value={update.cancellation}
                         label="Cancellation (weeks)"
@@ -77,7 +66,7 @@ const EditDetailForm = (props) => {
                         type="number"
                     />
                 </div>
-                <div className={classes.moq_modal_button_container}>
+                <div className={`${classes.moq_modal_button_container} ${classes.moq_modal_button_container_padding}`}>
                     <Button onClick={() => {savePd(update)}} variant="contained" className={classes.edit_pd_button}>Update & Save</Button>
                     <Button onClick={close} variant="outlined" className={`${classes.delete_pd_button} ${classes.cancel_pd_button}`}>Cancel</Button>
                 </div>
